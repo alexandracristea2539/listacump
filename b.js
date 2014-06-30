@@ -3,7 +3,7 @@
  */
 
 var app = angular.module('Store',[]);
-
+//fhdsfh
 app.controller('ShopCtrl', ['$scope', function($scope) {
 
     $scope.items = [
