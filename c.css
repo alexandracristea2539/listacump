@@ -1,0 +1,4 @@
+.container .main .bought {
+    text-decoration: line-through;
+    color: darkslategrey;
+}
