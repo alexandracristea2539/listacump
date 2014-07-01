@@ -4,28 +4,47 @@
     <meta charset="UTF-8">
     <title>Lista mea</title>
     <link rel="stylesheet" href="c.css">
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+    <script src="angular.min.js"></script>
     <script src="b.js"></script>
 
 </head>
 <body>
 <div class="container" ng-controller="ShopCtrl">
-    <h1>My Shopping List</h1>
+    <h1>My Shopping List</h1><br/>
     <div class="main">
+        <div class="bar">
+           <input type="text" ng-model="search.$" placeholder="search">
+        </div>
         <ul class="unstyled">
-            <li ng-repeat="item in items">
-                <input type="checkbox" id="item-{{item.id}}" ng-model="item.bought">
-                <label for="item-{{item.id}}" class="{{isBought(item.bought)}}">{{item.text}}<span></span></label>
+            <li ng-repeat="item in items | filter:search" ng-controller="EditCtrl">
+                <div ng-hide="editorEnabled">
+                 <input type="checkbox" id="item-{{item.id}}" ng-model="item.bought">
+                 <label for="item-{{item.id}}" class="{{isBought(item.bought)}}">Nume:{{item.text}}<span></span></label><br />
+                 <label for="item-{{item.id}}" class="{{isBought(item.bought)}}">Descriere:{{item.descriere}}<span></span></label><br />
+                 <input type="button" value="Edit" ng-click="editorEnabled">
+                </div>
+                <div ng-show="editorEnabled">
+                 <input ng-model="editableTitle" ng-show="editorEnabled">
+                 <input ng-model="editableTitle1" ng-show="editorEnabled">
+                 <input type="button" value="Save" ng-click="Save()">
+                 <input type="button" value="Cancel" ng-click="disableEditor()">
+                </div>
+                <form   ng-show="checked">
+                  <input  ng-model="item.text" type="text"   size="30" placeholder="nume produs">
+                  <input  ng-model="item.descriere" type="text"   size="30" placeholder="detalii">
+                </form>
             </li>
-        </ul>
-        <form class="form-horizontal" ng-submit="addItem()">
-            <input type="text" ng-model="itemEntry" placeholder="Type and hit Enter to add item">
-        </form>>
-        <form class="form-horizontal" ng-submit="addItem1()">
-            <input type="text" ng-model="itemEntry1" placeholder="Type and hit Enter to add a description">
-        </form>
-    </div>
+        </ul><br />
+                 <div><input type="button" value="Show form" ng-click="control()"></div>
+                <form novalidate class="simple-form" ng-submit="addItem()" ng-show="checked">
+                         Nume: <input type="text" ng-model="produs.text" placeholder="nume produs"/><br />
+                         Descriere: <input type="text" ng-model="produs.descriere" placeholder="detalii"/><br />
+                        <input type="button" value="Add" ng-click="addItem()">
 
+                </form>
+
+    </div>
+<br />
     <div class="footer">
         <button class="btn btn-large btn-danger" ng-click="clearBought()">Remove Bought</button>
     </div>
